@@ -16,8 +16,9 @@ if (!function_exists('createDefaultUser')) {
         $name = config("users.{$role}_name");
         $email = config("users.{$role}_email");
         $password = Hash::make(config("users.{$role}_password"));
+        $teamName = config("users.team_name");
 
-        // Crear o obtenir l'usuari
+        // Crear o obtener el usuario
         $user = User::firstOrCreate([
             'email' => $email,
         ], [
@@ -25,19 +26,36 @@ if (!function_exists('createDefaultUser')) {
             'password' => $password,
         ]);
 
-        // Crear o obtenir el Team
-        $team = Team::where('name', 'Default Team')->first();
+        // Crear o obtener el Team
+        $team = Team::firstOrCreate([
+            'name' => $teamName,
+            'user_id' => $user->id,
+        ]);
 
-        if (!$team) {
-            $team = Team::create([
-                'name' => 'Default Team',
-                'user_id' => $user->id,
-            ]);
-        }
-
-        // Associar l'usuari al Team (si cal)
+        // Asociar el usuario al Team
         $user->teams()->syncWithoutDetaching([$team->id]);
 
+        // Establecer el current_team_id del usuario
+        $user->current_team_id = $team->id;
+        $user->save();
+
         return $user;
+    }
+}
+
+if (!function_exists('createDefaultVideo')) {
+    /**
+     * Create a default video.
+     *
+     * @param string $type
+     * @return Video
+     */
+    function createDefaultVideo($type)
+    {
+        return Video::create([
+            'title' => config("videos.{$type}_title"),
+            'description' => config("videos.{$type}_description"),
+            'url' => config("videos.{$type}_url"),
+        ]);
     }
 }
