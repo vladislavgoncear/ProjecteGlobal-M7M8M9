@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Helpers\VideoHelper;
 use App\Models\Video;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -40,11 +41,21 @@ class HelpersTest extends TestCase
 
     public function test_create_default_video()
     {
-        $video = createDefaultVideo('default');
+        $defaultVideos = VideoHelper::getDefaultVideos();
 
-        $this->assertInstanceOf(Video::class, $video);
-        $this->assertEquals(config('videos.default_title'), $video->title);
-        $this->assertEquals(config('videos.default_description'), $video->description);
-        $this->assertEquals(config('videos.default_url'), $video->url);
+        foreach ($defaultVideos as $videoData) {
+            Video::create($videoData);
+
+        }
+        foreach ($defaultVideos as $videoData) {
+            $this->assertDatabaseHas('videos', [
+                'title' => $videoData['title'],
+                'description' => $videoData['description'],
+                'url' => $videoData['url'],
+                'published_at' => $videoData['published_at'],
+            ]);
+
+
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use App\Models\Team;
+use App\Models\Video;
 use Illuminate\Support\Facades\Hash;
 
 if (!function_exists('createDefaultUser')) {

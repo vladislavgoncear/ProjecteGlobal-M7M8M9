@@ -18,7 +18,7 @@ class VideoHelper
             [
                 'title' => 'Car Wash',
                 'description' => 'Day in the life of a Luxury Car Wash',
-                'url' => 'https://www.youtube.com/watch?v=53CAROF-w-E',
+                'url' => 'https://www.youtube.com/embed/53CAROF-w-E',
                 'published_at' => Carbon::now(),
                 'previous' => null,
                 'next' => null,
@@ -29,7 +29,7 @@ class VideoHelper
             [
                 'title' => 'Porche Review',
                 'description' => 'Porsche 992 GT3 RS // 306km/h REVIEW on Autobahn',
-                'url' => 'https://www.youtube.com/watch?v=_ALtBbXcyXc',
+                'url' => 'https://www.youtube.com/embed/_ALtBbXcyXc',
                 'published_at' => Carbon::now(),
                 'previous' => 1,
                 'next' => null,

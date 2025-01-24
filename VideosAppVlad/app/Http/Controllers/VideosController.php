@@ -3,31 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\Video;
-use Illuminate\Http\Request;
+use Illuminate\View\View;
+
 
 class VideosController extends Controller
 {
-    /**
-     * Display the specified video.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
+    // VideoController.php
+
     public function show($id)
     {
         $video = Video::findOrFail($id);
-        return view('videos.show', compact('video'));
+
+        $previousVideo = Video::where('id', '<', $video->id)->orderBy('id', 'desc')->first();
+        $nextVideo = Video::where('id', '>', $video->id)->orderBy('id', 'asc')->first();
+
+        return view('videos.show', compact('video', 'previousVideo', 'nextVideo'));
     }
 
-    /**
-     * Display a listing of videos tested by a specific user.
-     *
-     * @param  int  $userId
-     * @return \Illuminate\Http\Response
-     */
-    public function testedBy($userId)
-    {
-        $videos = Video::where('tested_by', $userId)->get();
-        return view('videos.tested_by', compact('videos'));
-    }
+
+//    public function testedBy($userId)
+//    {
+//        $videos = Video::where('tested_by', $userId)->get();
+//        return view('videos.tested_by', compact('videos'));
+//    }
 }
