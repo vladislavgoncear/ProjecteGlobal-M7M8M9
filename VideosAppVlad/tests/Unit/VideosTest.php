@@ -5,12 +5,14 @@ namespace Tests\Unit;
 use App\Models\Video;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class VideosTest extends TestCase
 {
     use RefreshDatabase;
 
+    #[Test]
     public function can_get_formatted_published_at_date()
     {
         $video = Video::create([
@@ -26,6 +28,7 @@ class VideosTest extends TestCase
         );
     }
 
+    #[Test]
     public function can_get_formatted_published_at_date_when_not_published()
     {
         $video = Video::create([

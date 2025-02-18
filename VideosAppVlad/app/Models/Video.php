@@ -18,21 +18,21 @@ class Video extends Model
     /**
      * Get the formatted published_at date.
      *
-     * @return string
+     *
      */
     public function getFormattedPublishedAtAttribute()
     {
-        return $this->published_at->translatedFormat('j \d\e F \d\e Y');
+        return Carbon::parse($this->published_at)->format('j \d\e F \d\e Y');
     }
 
     /**
      * Get the published_at date formatted for humans.
      *
-     * @return string
+     *
      */
     public function getFormattedForHumansPublishedAtAttribute()
     {
-        return $this->published_at->diffForHumans();
+        return Carbon::parse($this->published_at)->diffForHumans();
     }
 
     /**
@@ -42,6 +42,6 @@ class Video extends Model
      */
     public function getPublishedAtTimestampAttribute()
     {
-        return $this->published_at->timestamp;
+        return Carbon::parse($this->published_at)->timestamp;
     }
 }

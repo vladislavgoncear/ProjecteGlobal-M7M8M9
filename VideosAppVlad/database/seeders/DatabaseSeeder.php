@@ -2,20 +2,29 @@
 
 namespace Database\Seeders;
 
+use App\Helpers\helpers;
+use App\Helpers\VideoHelper;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     *
-     * @return void
-     */
-    public function run()
+    public function run(): void
     {
         $this->call([
             UsersTableSeeder::class,
             VideosTableSeeder::class,
         ]);
+
+        //Crear permisos
+        helpers::create_permissions();
+
+        //Crear usuaris per defecte
+        helpers::create_superadmin_user();
+        helpers::create_regular_user();
+        helpers::create_video_manager_user();
     }
 }

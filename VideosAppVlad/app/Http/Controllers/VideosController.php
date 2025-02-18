@@ -27,4 +27,10 @@ class VideosController extends Controller
 //        $videos = Video::where('tested_by', $userId)->get();
 //        return view('videos.tested_by', compact('videos'));
 //    }
+
+    public function index(): View
+    {
+        // Add your logic to manage videos here
+        return view('videos.index');
+    }
 }

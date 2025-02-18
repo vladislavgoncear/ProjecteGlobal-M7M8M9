@@ -17,4 +17,8 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::get('/videosmanage', [VideosController::class, 'index'])->name('videos.index')->middleware('role:manage-videos');
 });
+
+

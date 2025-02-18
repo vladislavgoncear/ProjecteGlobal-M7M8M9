@@ -18,3 +18,11 @@ En el segon sprint, el focus va ser millorar les funcionalitats de gestió de v�
 - Millora de la interfície d'usuari i l'experiència d'usuari.
 - Afegits tests d'unitat i de funcionalitat per a les funcionalitats relacionades amb vídeos.
 - Desplegament de l'aplicació en un entorn de proves.
+
+## Resum del Sprint 3
+Durant el tercer sprint, es van realitzar les següents tasques:
+- Solució d'errors relacionats amb la gestió de permisos i rols d'usuaris.
+- Implementació de la lògica d'autorització per a la ruta /videosmanage.
+- Actualització dels tests de funcionalitat per verificar correctament els permisos d'accés.
+- Millora de la configuració de les rutes per assegurar-se que només els usuaris amb permisos adequats poden accedir a la gestió de vídeos.
+- Revisió i actualització de la documentació del projecte per reflectir els canvis realitzats en la gestió de permisos i autorització.

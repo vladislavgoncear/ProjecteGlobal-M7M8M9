@@ -16,11 +16,12 @@ class Team extends JetstreamTeam
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'name',
         'user_id',
+        'personal_team',
     ];
 
     /**
@@ -45,9 +46,9 @@ class Team extends JetstreamTeam
             'personal_team' => 'boolean',
         ];
     }
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
 }

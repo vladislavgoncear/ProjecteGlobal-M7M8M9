@@ -1,13 +1,12 @@
 <?php
 
 return [
-    'user_name' => env('DEFAULT_USER_NAME', 'Default User'),
-    'user_email' => env('DEFAULT_USER_EMAIL', 'user@example.com'),
-    'user_password' => env('DEFAULT_USER_PASSWORD', 'password'),
-    'team_name' => env('DEFAULT_TEAM_NAME', 'Default Team'),
+    'default_user_name' => env('DEFAULT_USER_NAME', 'Test'),
+    'default_user_email' => env('DEFAULT_USER_EMAIL', 'test@example.com'),
+    'default_user_password' => env('DEFAULT_USER_PASSWORD', 'password123'),
 
-    'professor_name' => env('DEFAULT_PROFESSOR_NAME', 'Default Professor'),
-    'professor_email' => env('DEFAULT_PROFESSOR_EMAIL', 'professor@example.com'),
-    'professor_password' => env('DEFAULT_PROFESSOR_PASSWORD', 'password'),
+    'default_professor_name' => env('DEFAULT_PROFESSOR_NAME', 'Professor'),
+    'default_professor_email' => env('DEFAULT_PROFESSOR_EMAIL', 'professor@example.com'),
+    'default_professor_password' => env('DEFAULT_PROFESSOR_PASSWORD', 'password123'),
+    'default_team_name' => env('DEFAULT_TEAM_NAME', 'Default Team'),
 ];
-

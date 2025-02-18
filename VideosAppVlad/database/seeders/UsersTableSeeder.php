@@ -17,18 +17,22 @@ class UsersTableSeeder extends Seeder
     {
         $users = [
             [
-                'name' => config('users.user_name'),
-                'email' => config('users.user_email'),
-                'password' => Hash::make(config('users.user_password')),
+                'name' => config('users.default_user_name'),
+                'email' => config('users.default_user_email'),
+                'password' => Hash::make(config('users.default_user_password')),
             ],
             [
-                'name' => config('users.professor_name'),
-                'email' => config('users.professor_email'),
-                'password' => Hash::make(config('users.professor_password')),
+                'name' => config('users.default_professor_name'),
+                'email' => config('users.default_professor_email'),
+                'password' => Hash::make(config('users.default_professor_password')),
             ],
         ];
 
         foreach ($users as $userData) {
+            if (empty($userData['name']) || empty($userData['email'])) {
+                throw new \Exception("Name or email configuration is missing for one of the users.");
+            }
+
             User::updateOrCreate(
                 ['email' => $userData['email']],
                 $userData
