@@ -37,6 +37,17 @@ class VideoHelper
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
+            [
+                'title' => 'Ferrari Review',
+                'description' => 'Ferrari 812 GTS Review',
+                'url' => 'https://youtu.be/hXYb0mJM_wQ',
+                'published_at' => Carbon::now(),
+                'previous' => 2,
+                'next' => null,
+                'series_id' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]
         ];
     }
 }

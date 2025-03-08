@@ -25,8 +25,16 @@ class VideosManageControllerTest extends TestCase
     {
         $this->loginAsVideoManager();
 
+        // Create 3 videos
+        $videos = \App\Models\Video::factory()->count(3)->create();
+
         $response = $this->get('/videosmanage');
         $response->assertStatus(200);
+
+        // Optionally, you can assert that the videos are present in the response
+        $response->assertSee($videos[0]->title);
+        $response->assertSee($videos[1]->title);
+        $response->assertSee($videos[2]->title);
     }
 
     #[Test]
@@ -74,6 +82,137 @@ class VideosManageControllerTest extends TestCase
         //$user = helpers::create_regular_user();
         $user = User::factory()->create();
         $this->actingAs($user);
+    }
+
+    #[Test]
+    public function user_with_permissions_can_see_add_videos()
+    {
+        $this->loginAsVideoManager();
+
+        $response = $this->get('/videos/create');
+        $response->assertStatus(200);
+        $response->assertSee('Add Video');
+    }
+
+    #[Test]
+    public function user_without_videos_manage_create_cannot_see_add_videos()
+    {
+        $this->loginAsRegularUser();
+
+        $response = $this->get('/videos/create');
+        $response->assertStatus(403);
+    }
+
+    #[Test]
+    public function user_with_permissions_can_store_videos()
+    {
+        $this->loginAsVideoManager();
+
+        $response = $this->post('/videos', [
+            'title' => 'New Video',
+            'description' => 'Video description',
+            'url' => 'http://example.com/video.mp4',
+        ]);
+
+        $response->assertStatus(302);
+        $this->assertDatabaseHas('videos', ['title' => 'New Video']);
+    }
+
+    #[Test]
+    public function user_without_permissions_cannot_store_videos()
+    {
+        $this->loginAsRegularUser();
+
+        $response = $this->post('/videos', [
+            'title' => 'New Video',
+            'description' => 'Video description',
+            'url' => 'http://example.com/video.mp4',
+        ]);
+
+        $response->assertStatus(403);
+    }
+
+    #[Test]
+    public function user_with_permissions_can_destroy_videos()
+    {
+        $this->loginAsVideoManager();
+
+        $video = \App\Models\Video::factory()->create();
+
+        $response = $this->delete("/videos/{$video->id}");
+
+        $response->assertStatus(302);
+        $this->assertDatabaseMissing('videos', ['id' => $video->id]);
+    }
+
+    #[Test]
+    public function user_without_permissions_cannot_destroy_videos()
+    {
+        $this->loginAsRegularUser();
+
+        $video = \App\Models\Video::factory()->create();
+
+        $response = $this->delete("/videos/{$video->id}");
+
+        $response->assertStatus(403);
+    }
+
+    #[Test]
+    public function user_with_permissions_can_see_edit_videos()
+    {
+        $this->loginAsVideoManager();
+
+        $video = \App\Models\Video::factory()->create();
+
+        $response = $this->get("/videos/{$video->id}/edit");
+
+        $response->assertStatus(200);
+        $response->assertSee('Edit Video');
+    }
+
+    #[Test]
+    public function user_without_permissions_cannot_see_edit_videos()
+    {
+        $this->loginAsRegularUser();
+
+        $video = \App\Models\Video::factory()->create();
+
+        $response = $this->get("/videos/{$video->id}/edit");
+
+        $response->assertStatus(403);
+    }
+
+    #[Test]
+    public function user_with_permissions_can_update_videos()
+    {
+        $this->loginAsVideoManager();
+
+        $video = \App\Models\Video::factory()->create();
+
+        $response = $this->put("/videos/{$video->id}", [
+            'title' => 'Updated Video Title',
+            'description' => 'Updated description',
+            'url' => 'http://example.com/updated_video.mp4',
+        ]);
+
+        $response->assertStatus(302);
+        $this->assertDatabaseHas('videos', ['title' => 'Updated Video Title']);
+    }
+
+    #[Test]
+    public function user_without_permissions_cannot_update_videos()
+    {
+        $this->loginAsRegularUser();
+
+        $video = \App\Models\Video::factory()->create();
+
+        $response = $this->put("/videos/{$video->id}", [
+            'title' => 'Updated Video Title',
+            'description' => 'Updated description',
+            'url' => 'http://example.com/updated_video.mp4',
+        ]);
+
+        $response->assertStatus(403);
     }
 
 }

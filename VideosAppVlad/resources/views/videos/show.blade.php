@@ -20,16 +20,16 @@
                 </div>
 
                 <!-- Navigation Buttons Container -->
-                <div class="d-flex justify-content-between mt-3">
-                    <a href="{{ $previousVideo ? route('videos.show', $previousVideo->id) : '#' }}"
-                       class="btn btn-navigation {{ $previousVideo ? '' : 'disabled' }}">
-                        <i class="fas fa-arrow-left"></i> Anterior
-                    </a>
-                    <a href="{{ $nextVideo ? route('videos.show', $nextVideo->id) : '#' }}"
-                       class="btn btn-navigation {{ $nextVideo ? '' : 'disabled' }}">
-                        Siguiente <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
+{{--                <div class="d-flex justify-content-between mt-3">--}}
+{{--                    <a href="{{ $previousVideo ? route('videos.show', $previousVideo->id) : '#' }}"--}}
+{{--                       class="btn btn-navigation {{ $previousVideo ? '' : 'disabled' }}">--}}
+{{--                        <i class="fas fa-arrow-left"></i> Anterior--}}
+{{--                    </a>--}}
+{{--                    <a href="{{ $nextVideo ? route('videos.show', $nextVideo->id) : '#' }}"--}}
+{{--                       class="btn btn-navigation {{ $nextVideo ? '' : 'disabled' }}">--}}
+{{--                        Siguiente <i class="fas fa-arrow-right"></i>--}}
+{{--                    </a>--}}
+{{--                </div>--}}
             </div>
         </div>
     </div>

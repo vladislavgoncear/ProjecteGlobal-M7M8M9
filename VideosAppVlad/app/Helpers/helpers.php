@@ -9,7 +9,6 @@ use Spatie\Permission\Models\Role;
 class helpers {
     public static function createDefaultUser(): User
     {
-
         // Crear o obtenir l'usuari per defecte
         $user = User::firstOrCreate(
             ['email' => config('users.default_user_email')],
@@ -23,7 +22,6 @@ class helpers {
             ['name' => config('users.default_team_name')],
             ['user_id' => $user->id] // Opcional, només si 'user_id' és nullable
         );
-
 
         // Assegurar-nos que 'team_id' es guarda correctament
         if ($user->current_team_id !== $team->id) {
@@ -82,7 +80,6 @@ class helpers {
             'super_admin' => false,
         ]);
 
-        //self::add_personal_team($user);
         // Crear o obtenir l'equip per defecte
         $team = Team::firstOrCreate(
             ['name' => config('users.default_team_name')],
@@ -120,8 +117,8 @@ class helpers {
         }
 
         // Assignem el rol de Video Manager a l'usuari
-        Permission::create(['name' => 'Video Manager']);
-        $user->givePermissionTo('Video Manager', ['team_id' => $user->current_team_id]);
+        $role = Role::firstOrCreate(['name' => 'Video Manager']);
+        $user->assignRole($role);
 
         return $user;
     }
@@ -135,7 +132,6 @@ class helpers {
             'super_admin' => true,
         ]);
 
-        //self::add_personal_team($user);
         // Crear o obtenir l'equip per defecte
         $team = Team::firstOrCreate(
             ['name' => config('users.default_team_name')],
@@ -179,6 +175,17 @@ class helpers {
         $role->givePermissionTo($permissions);
     }
 
+    public static function assign_permissions_to_user(User $user)
+    {
+        $permissions = [
+            'view videos',
+            'create videos',
+            'edit videos',
+            'delete videos',
+        ];
 
-
+        foreach ($permissions as $permission) {
+            $user->givePermissionTo($permission);
+        }
+    }
 }

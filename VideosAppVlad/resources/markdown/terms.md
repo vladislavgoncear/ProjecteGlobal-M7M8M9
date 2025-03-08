@@ -26,3 +26,17 @@ Durant el tercer sprint, es van realitzar les següents tasques:
 - Actualització dels tests de funcionalitat per verificar correctament els permisos d'accés.
 - Millora de la configuració de les rutes per assegurar-se que només els usuaris amb permisos adequats poden accedir a la gestió de vídeos.
 - Revisió i actualització de la documentació del projecte per reflectir els canvis realitzats en la gestió de permisos i autorització.
+
+## Resum del Sprint 4
+Durant el quart sprint, es van completar les següents tasques:
+- Creació de permisos per a les operacions CRUD de vídeos.
+- Assignació de permisos al rol `Video Manager`.
+- Creació de mètodes per assignar aquests permisos als usuaris.
+- Creació d'usuaris per defecte incloent usuaris regulars, gestors de vídeos i super administradors.
+- Assegurar que els usuaris estan assignats als equips correctes.
+- Afegits tests per verificar que els usuaris amb i sense permisos poden veure, crear, editar, actualitzar i eliminar vídeos.
+- Creació de rutes per gestionar vídeos amb el middleware corresponent.
+- Assegurar que les rutes CRUD de vídeos són accessibles només quan l'usuari està logejat.
+- Fer que la ruta d'índex de vídeos sigui accessible tant per usuaris logejats com no logejats.
+- Afegir una barra de navegació i un peu de pàgina a la plantilla `resources/views/layouts/videos-app-layout.blade.php`.
+- Habilitar la navegació entre pàgines a la barra de navegació.

@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\VideosController;
+use App\Http\Controllers\videosManageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/videos/{id}', [VideosController::class, 'show'])->name('videos.show');
+Route::get('/videos', [videosManageController::class, 'index'])->name('videos.index');
+Route::get('/videos/{id}', [videosManageController::class, 'show'])->name('videos.show');
 
 Route::middleware([
     'auth:sanctum',
@@ -18,7 +19,12 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/videosmanage', [VideosController::class, 'index'])->name('videos.index')->middleware('role:manage-videos');
+//    Route::middleware('role:Video Manager')->group(function () {
+        Route::get('/videosmanage', [videosManageController::class, 'index'])->name('videos.index');
+        Route::get('/videosmanage/create', [videosManageController::class, 'index'])->name('videos.create');
+        Route::post('/videosmanage', [videosManageController::class, 'store'])->name('videos.store');
+        Route::get('/videosmanage/{video}/edit', [videosManageController::class, 'edit'])->name('videos.edit');
+        Route::put('/videosmanage/{video}', [videosManageController::class, 'update'])->name('videos.update');
+        Route::delete('/videosmanage/{video}', [videosManageController::class, 'destroy'])->name('videos.destroy');
+//    });
 });
-
-
