@@ -8,10 +8,7 @@ use Carbon\Carbon;
 class Video extends Model
 {
     protected $fillable = [
-        'title',
-        'description',
-        'url',
-        'published_at',
+        'path'
     ];
     protected $dates = ['published_at'];
 
