@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Video;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class videosManageController extends Controller
@@ -27,18 +28,24 @@ class videosManageController extends Controller
     /**
      * Store a newly created video in storage.
      */
-    public function store(Request $request)
+    // VideoController.php
+
+    // VideoController.php
+
+    public function store(Request $request): RedirectResponse
     {
-        $request->validate([
+        $validate = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'url' => 'required|url',
             'published_at' => 'required|date',
         ]);
 
-        Video::create($request->all());
+        $validate['user_id'] = auth()->id();
 
-        return redirect()->route('videos.manage.index')->with('success', 'Video created successfully.');
+        Video::create($validate);
+
+        return redirect()->route('videos.index')->with('success', 'Video created successfully.');
     }
 
     /**

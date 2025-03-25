@@ -16,15 +16,20 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UsersTableSeeder::class,
-            VideosTableSeeder::class,
+            //SeriesTableSeeder::class,
+            //VideosTableSeeder::class,
         ]);
 
         //Crear permisos
+        helpers::define_gates();
         helpers::create_permissions();
+        helpers::create_user_management_permissions();
 
         //Crear usuaris per defecte
         helpers::create_superadmin_user();
         helpers::create_regular_user();
         helpers::create_video_manager_user();
+
+        VideoHelper::getDefaultVideos();
     }
 }

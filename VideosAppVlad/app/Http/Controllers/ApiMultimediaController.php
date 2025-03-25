@@ -60,6 +60,11 @@ class ApiMultimediaController extends Controller
 
         $path = $request->file('video')->store('videos', 'public');
 
+        Video::create([
+            'path' => $path,
+            'user_id' => Auth::id()
+        ]);
+
 
 
         return response()->json(['message' => 'Video uploaded successfully', 'path' => $path], 201);

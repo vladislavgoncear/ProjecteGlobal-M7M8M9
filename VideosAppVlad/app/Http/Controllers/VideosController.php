@@ -14,11 +14,9 @@ class VideosController extends Controller
     public function show($id)
     {
         $video = Video::findOrFail($id);
+        $otherVideos = Video::where('id', '!=', $id)->get();
 
-        $previousVideo = Video::where('id', '<', $video->id)->orderBy('id', 'desc')->first();
-        $nextVideo = Video::where('id', '>', $video->id)->orderBy('id', 'asc')->first();
-
-        return view('videos.show', compact('video', 'previousVideo', 'nextVideo'));
+        return view('videos.show', compact('video', 'otherVideos'));
     }
 
 
@@ -30,7 +28,54 @@ class VideosController extends Controller
 
     public function index(): View
     {
-        // Add your logic to manage videos here
-        return view('videos.index');
+        $videos = Video::all(); // Retrieve all videos from the database
+        return view('videos.index', compact('videos')); // Pass the videos to the view
+    }
+
+    // VideoController.php
+
+    // En `app/Http/Controllers/VideoController.php`
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'url' => 'required|url',
+            'published_at' => 'required|date',
+        ]);
+
+        Video::create([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'url' => $request->input('url'),
+            'published_at' => $request->input('published_at'),
+            'user_id' => auth()->id(), // Asigna el ID del usuario autenticado
+        ]);
+
+        return redirect()->route('videos.index')->with('success', 'Video created successfully.');
+    }
+
+    public function update(Request $request, Video $video)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'url' => 'required|url',
+            'published_at' => 'required|date',
+        ]);
+
+        $video->update([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'url' => $request->input('url'),
+            'published_at' => $request->input('published_at'),
+        ]);
+
+        return redirect()->route('videos.index')->with('success', 'Video updated successfully.');
+    }
+
+    public function edit(Video $video)
+    {
+        return view('videos.manage.edit', compact('video'));
     }
 }

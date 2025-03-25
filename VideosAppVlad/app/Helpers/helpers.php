@@ -144,6 +144,22 @@ class helpers {
             $user->save();
         }
 
+        // Assign user management permissions to superadmin
+        $permissions = [
+            'view videos',
+            'create videos',
+            'edit videos',
+            'delete videos',
+            'view users',
+            'create users',
+            'edit users',
+            'delete users',
+        ];
+
+        foreach ($permissions as $permission) {
+            $user->givePermissionTo($permission);
+        }
+
         return $user;
     }
 
@@ -164,7 +180,7 @@ class helpers {
             'view videos',
             'create videos',
             'edit videos',
-            'delete videos',
+            'delete videos'
         ];
 
         foreach ($permissions as $permission) {
@@ -188,4 +204,22 @@ class helpers {
             $user->givePermissionTo($permission);
         }
     }
+
+    public static function create_user_management_permissions()
+    {
+        $permissions = [
+            'view users',
+            'create users',
+            'edit users',
+            'delete users',
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+        }
+    }
+
+
+
+
 }

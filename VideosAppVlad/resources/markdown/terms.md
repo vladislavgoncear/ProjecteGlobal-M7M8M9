@@ -40,3 +40,44 @@ Durant el quart sprint, es van completar les següents tasques:
 - Fer que la ruta d'índex de vídeos sigui accessible tant per usuaris logejats com no logejats.
 - Afegir una barra de navegació i un peu de pàgina a la plantilla `resources/views/layouts/videos-app-layout.blade.php`.
 - Habilitar la navegació entre pàgines a la barra de navegació.
+
+# Resum de l'Sprint 5
+
+## Tasques Completades
+
+1. **Permisos de Gestió d'Usuaris**
+    - Creat permisos per gestionar usuaris (operacions CRUD).
+    - Assignats aquests permisos als usuaris superadministradors.
+
+2. **Tests d'Usuaris**
+    - Afegits tests per a permisos d'usuaris i control d'accés:
+        - `user_without_permissions_can_see_default_users_page`
+        - `user_with_permissions_can_see_default_users_page`
+        - `not_logged_users_cannot_see_default_users_page`
+        - `user_without_permissions_can_see_user_show_page`
+        - `user_with_permissions_can_see_user_show_page`
+        - `not_logged_users_cannot_see_user_show_page`
+
+3. **Tests del UsersManageController**
+    - Afegits tests per a les funcionalitats de gestió d'usuaris:
+        - `loginAsVideoManager`
+        - `loginAsSuperAdmin`
+        - `loginAsRegularUser`
+        - `user_with_permissions_can_see_add_users`
+        - `user_without_users_manage_create_cannot_see_add_users`
+        - `user_with_permissions_can_store_users`
+        - `user_without_permissions_cannot_store_users`
+        - `user_with_permissions_can_destroy_users`
+        - `user_without_permissions_cannot_destroy_users`
+        - `user_with_permissions_can_see_edit_users`
+        - `user_without_permissions_cannot_see_edit_users`
+        - `user_with_permissions_can_update_users`
+        - `user_without_permissions_cannot_update_users`
+        - `user_with_permissions_can_manage_users`
+        - `regular_users_cannot_manage_users`
+        - `guest_users_cannot_manage_users`
+        - `superadmins_can_manage_users`
+
+4. **Rutes**
+    - Creat rutes per a la gestió d'usuaris (CRUD) amb el middleware corresponent.
+    - Assegurat que les rutes per a l'índex i la pàgina de detall només són accessibles quan estàs logejat.

@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Helpers\helpers;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -11,10 +13,18 @@ class ApiMultimediaControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function boot()
+    {
+        helpers::create_permissions();
+    }
+
     /** @test */
     public function it_can_upload_a_video()
     {
         Storage::fake('public');
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
 
         $response = $this->postJson('/upload/video', [
             'video' => UploadedFile::fake()->create('video.mp4', 20000, 'video/mp4'),
@@ -23,6 +33,11 @@ class ApiMultimediaControllerTest extends TestCase
         $response->assertStatus(201);
         $response->assertJson(['message' => 'Video uploaded successfully']);
         Storage::disk('public')->assertExists('videos/video.mp4');
+
+        $this->assertDatabaseHas('videos', [
+            'user_id' => $user->id,
+            'path' => 'videos/video.mp4',
+        ]);
     }
 
     /** @test */

@@ -7,10 +7,32 @@ use Carbon\Carbon;
 
 class Video extends Model
 {
+
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
+
+    protected $casts = [
+        'published_at' => 'datetime',
+    ];
     protected $fillable = [
-        'path'
+        'path',
+        'title',
+        'description',
+        'published_at',
+        'url',
+        'user_id',
+        'previous',
+        'next'
     ];
     protected $dates = ['published_at'];
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     /**
      * Get the formatted published_at date.

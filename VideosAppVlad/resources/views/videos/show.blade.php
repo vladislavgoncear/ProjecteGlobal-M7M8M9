@@ -18,25 +18,12 @@
                 <div class="video-wrapper mb-3">
                     <iframe src="{{ $video->url }}" frameborder="0" allowfullscreen class="rounded"></iframe>
                 </div>
-
-                <!-- Navigation Buttons Container -->
-{{--                <div class="d-flex justify-content-between mt-3">--}}
-{{--                    <a href="{{ $previousVideo ? route('videos.show', $previousVideo->id) : '#' }}"--}}
-{{--                       class="btn btn-navigation {{ $previousVideo ? '' : 'disabled' }}">--}}
-{{--                        <i class="fas fa-arrow-left"></i> Anterior--}}
-{{--                    </a>--}}
-{{--                    <a href="{{ $nextVideo ? route('videos.show', $nextVideo->id) : '#' }}"--}}
-{{--                       class="btn btn-navigation {{ $nextVideo ? '' : 'disabled' }}">--}}
-{{--                        Siguiente <i class="fas fa-arrow-right"></i>--}}
-{{--                    </a>--}}
-{{--                </div>--}}
             </div>
         </div>
     </div>
 @endsection
 
 <style>
-    /* General Styles */
     .video-wrapper {
         position: relative;
         padding-bottom: 56.25%; /* 16:9 aspect ratio */
@@ -54,25 +41,5 @@
         width: 100%;
         height: 100%;
         border-radius: 8px;
-    }
-
-    .btn-navigation {
-        background-color: #007bff;
-        color: #ffffff;
-        border-radius: 50px;
-        padding: 10px 20px;
-        text-decoration: none;
-        transition: background-color 0.3s;
-        margin-top: -50px;
-    }
-
-    .btn-navigation:hover {
-        background-color: #0056b3;
-    }
-
-    .btn.disabled {
-        background-color: #ccc;
-        pointer-events: none;
-        color: #6c757d;
     }
 </style>

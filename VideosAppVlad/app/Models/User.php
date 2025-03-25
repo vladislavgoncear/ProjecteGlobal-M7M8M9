@@ -36,4 +36,10 @@ class User extends Authenticatable
     {
         return $this->hasRole('Super Admin');
     }
+
+    // In User.php model
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
 }

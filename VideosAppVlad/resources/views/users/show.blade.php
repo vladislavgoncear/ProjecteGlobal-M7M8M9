@@ -2,26 +2,27 @@
 
 @section('content')
     <div class="container mt-5">
-        <h1 class="mb-4">Videos</h1>
+        <h1 class="mb-4">{{ $user->name }}</h1>
+        <p>Email: {{ $user->email }}</p>
+        <h2 class="mb-4">Videos Created</h2>
         <div class="row">
-            @forelse($videos as $video)
+            @forelse($user->videos as $video)
                 <div class="col-6 col-md-4 col-lg-2 mb-4">
-                    <a href="{{ route('videos.show', $video->id) }}" class="text-decoration-none">
-                        <div class="card video-card">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $video->title }}</h5>
-                                <div class="video-preview">
-                                    <iframe src="{{ $video->url }}" frameborder="0" allowfullscreen></iframe>
-                                </div>
-                                <p class="card-text">{{ $video->published_at->format('j \d\e F \d\e Y') }}</p>
+                    <div class="card video-card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $video->title }}</h5>
+                            <div class="video-preview">
+                                <iframe src="{{ $video->url }}" frameborder="0" allowfullscreen></iframe>
                             </div>
+                            <p class="card-text">{{ $video->published_at->format('j \d\e F \d\e Y') }}</p>
                         </div>
-                    </a>
+                    </div>
                 </div>
             @empty
-                <p>No videos available.</p>
+                <p>No videos created by this user.</p>
             @endforelse
         </div>
+        <a href="{{ route('users.index') }}" class="btn btn-primary mt-3">Back to Users</a>
     </div>
 @endsection
 
