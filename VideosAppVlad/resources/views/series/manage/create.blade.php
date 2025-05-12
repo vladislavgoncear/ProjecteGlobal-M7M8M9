@@ -4,50 +4,38 @@
     <div class="container mt-5">
         <div class="card create-card shadow-sm border-0">
             <div class="card-header bg-transparent text-center">
-                <h1 class="text-dark" style="font-size: 1.8em; margin-bottom: 20px;">Crear video</h1>
+                <h1 class="text-dark" style="font-size: 1.8em; margin-bottom: 20px;">Crear Serie</h1>
             </div>
             <div class="card-body p-4">
-                <form action="{{ route('videos.manage.store') }}" method="POST" style="max-width: 600px; margin: 0 auto;" data-qa="form-create-video">
+                <form action="{{ route('series.store') }}" method="POST" enctype="multipart/form-data" style="max-width: 600px; margin: 0 auto;" data-qa="form-create-series">
                     @csrf
                     <div style="margin-bottom: 15px;">
-                        <label for="title" style="display: block; font-weight: bold; margin-bottom: 5px;">Title</label>
+                        <label for="title" style="display: block; font-weight: bold; margin-bottom: 5px;">Título</label>
                         <input type="text" name="title" id="title" class="form-control" required
                                style="width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ccc; background-color: #f5f5f5;">
                     </div>
 
                     <div style="margin-bottom: 15px;">
-                        <label for="description" style="display: block; font-weight: bold; margin-bottom: 5px;">Description</label>
+                        <label for="description" style="display: block; font-weight: bold; margin-bottom: 5px;">Descripción</label>
                         <textarea name="description" id="description" rows="4" required
                                   style="width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ccc; background-color: #f5f5f5;"></textarea>
                     </div>
 
                     <div style="margin-bottom: 15px;">
-                        <label for="url" style="display: block; font-weight: bold; margin-bottom: 5px;">Video URL</label>
-                        <input type="url" name="url" id="url" class="form-control" required
+                        <label for="image" style="display: block; font-weight: bold; margin-bottom: 5px;">Imagen</label>
+                        <input type="file" name="image" id="image" class="form-control"
                                style="width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ccc; background-color: #f5f5f5;">
                     </div>
 
-                    <div style="margin-bottom: 20px;">
-                        <label for="published_at" style="display: block; font-weight: bold; margin-bottom: 5px;">Published At</label>
-                        <input type="date" name="published_at" id="published_at" class="form-control" required
+                    <div style="margin-bottom: 15px;">
+                        <label for="published_at" style="display: block; font-weight: bold; margin-bottom: 5px;">Fecha de Publicación</label>
+                        <input type="date" name="published_at" id="published_at" class="form-control"
                                style="width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ccc; background-color: #f5f5f5;">
-                    </div>
-
-                    <div style="margin-bottom: 20px;">
-                        <label for="series" style="display: block; font-weight: bold; margin-bottom: 5px;">Series</label>
-                        <select name="series_id" id="series" class="form-control" style="width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ccc; background-color: #f5f5f5;">
-                            <option value="">Select Series</option>
-                            @foreach($series as $serie)
-                                <option value="{{ $serie->id }}" {{ old('series_id') == $serie->id ? 'selected' : '' }}>
-                                    {{ $serie->title }}
-                                </option>
-                            @endforeach
-                        </select>
                     </div>
 
                     <button type="submit"
                             style="padding: 10px 20px; background-color: #333; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px;">
-                        Crear video
+                        Crear Serie
                     </button>
                 </form>
             </div>

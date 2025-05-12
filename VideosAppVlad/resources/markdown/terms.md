@@ -81,3 +81,29 @@ Durant el quart sprint, es van completar les següents tasques:
 4. **Rutes**
     - Creat rutes per a la gestió d'usuaris (CRUD) amb el middleware corresponent.
     - Assegurat que les rutes per a l'índex i la pàgina de detall només són accessibles quan estàs logejat.
+
+
+
+## Resum del Sprint 6
+Durant el sisè sprint, es van completar les següents tasques:
+- Creació de permisos per a la gestió de sèries (operacions CRUD).
+- Assignació de permisos al rol `Video Manager` i `Super Admin`.
+- Implementació de les rutes per a la gestió de sèries amb el middleware corresponent.
+- Creació de tests per verificar els permisos i l'accés a les funcionalitats de gestió de sèries:
+    - `user_with_permissions_can_see_add_series`
+    - `user_without_series_manage_create_cannot_see_add_series`
+    - `user_with_permissions_can_store_series`
+    - `user_without_permissions_cannot_store_series`
+    - `user_with_permissions_can_destroy_series`
+    - `user_without_permissions_cannot_destroy_series`
+    - `user_with_permissions_can_see_edit_series`
+    - `user_without_permissions_cannot_see_edit_series`
+    - `user_with_permissions_can_update_series`
+    - `user_without_permissions_cannot_update_series`
+    - `user_with_permissions_can_manage_series`
+    - `regular_users_cannot_manage_series`
+    - `guest_users_cannot_manage_series`
+    - `videomanagers_can_manage_series`
+    - `superadmins_can_manage_series`
+- Afegits tests d'unitat per verificar la relació entre sèries i vídeos.
+- Millora de la documentació del projecte per incloure els canvis realitzats en la gestió de sèries.

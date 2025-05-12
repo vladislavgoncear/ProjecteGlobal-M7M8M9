@@ -2,9 +2,39 @@
 namespace App\Helpers;
 use App\Models\User;
 use App\Models\Team;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+
+
+class SeriesPermissionsSeeder extends Seeder
+{
+    public function run()
+    {
+        // Crear permisos per al CRUD de les sèries
+        $permissions = [
+            'view series',
+            'create series',
+            'edit series',
+            'delete series',
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+        }
+
+        // Assignar permisos al rol de superadmin
+        $superAdminRole = Role::firstOrCreate(['name' => 'superadmin']);
+        $superAdminRole->syncPermissions($permissions);
+
+        // Assignar el rol de superadmin als usuaris existents (si n'hi ha)
+        $superAdminUsers = User::where('is_superadmin', true)->get(); // Assumeix que tens una columna `is_superadmin`
+        foreach ($superAdminUsers as $user) {
+            $user->assignRole($superAdminRole);
+        }
+    }
+}
 
 class helpers {
     public static function createDefaultUser(): User

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Series;
 use App\Models\Video;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -22,7 +23,8 @@ class videosManageController extends Controller
      */
     public function create()
     {
-        return view('videos.manage.create');
+        $series = Series::all();
+        return view('videos.manage.create', compact('series'));
     }
 
     /**
@@ -39,6 +41,7 @@ class videosManageController extends Controller
             'description' => 'required|string',
             'url' => 'required|url',
             'published_at' => 'required|date',
+            'series_id' => 'nullable|exists:series,id',
         ]);
 
         $validate['user_id'] = auth()->id();

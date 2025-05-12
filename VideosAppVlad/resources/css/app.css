@@ -5,3 +5,81 @@
 [x-cloak] {
     display: none;
 }
+
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* Root Variables */
+:root {
+    /* Color Palette */
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+    --text-color: #333;
+    --background-color: #f9f9f9;
+
+    /* Typography */
+    --font-family: 'Arial', sans-serif;
+    --font-size-small: 12px;
+    --font-size-medium: 16px;
+    --font-size-large: 24px;
+
+    /* Spacing */
+    --spacing-small: 8px;
+    --spacing-medium: 16px;
+    --spacing-large: 24px;
+}
+
+/* Global Styles */
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-medium);
+    color: var(--text-color);
+    background-color: var(--background-color);
+    line-height: 1.5;
+    margin: var(--spacing-medium);
+    padding: var(--spacing-medium);
+}
+
+/* Utility Classes */
+.container {
+    padding: var(--spacing-medium);
+    margin: var(--spacing-medium);
+}
+
+.text-small {
+    font-size: var(--font-size-small);
+}
+
+.text-large {
+    font-size: var(--font-size-large);
+}
+
+.bg-primary {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.bg-secondary {
+    background-color: var(--secondary-color);
+    color: #fff;
+}
+
+.bg-light {
+    background-color: var(--light-color);
+    color: var(--text-color);
+}
+
+.bg-dark {
+    background-color: var(--dark-color);
+    color: #fff;
+}

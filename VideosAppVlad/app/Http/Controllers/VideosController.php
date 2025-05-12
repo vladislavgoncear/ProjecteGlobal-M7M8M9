@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Video;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 
 class VideosController extends Controller
 {
+
+    public function create()
+    {
+        return view('videos.create');
+    }
 
     // VideoController.php
 
@@ -44,15 +50,18 @@ class VideosController extends Controller
             'published_at' => 'required|date',
         ]);
 
-        Video::create([
+        $video = Video::create([
             'title' => $request->input('title'),
             'description' => $request->input('description'),
             'url' => $request->input('url'),
             'published_at' => $request->input('published_at'),
-            'user_id' => auth()->id(), // Asigna el ID del usuario autenticado
+            'user_id' => auth()->id(),
         ]);
 
-        return redirect()->route('videos.index')->with('success', 'Video created successfully.');
+        session()->flash('message', "S’ha creat el vídeo “{$video->title}”!");
+        session()->flash('type', 'success');
+
+        return redirect()->route('videos.index');
     }
 
     public function update(Request $request, Video $video)
@@ -64,18 +73,27 @@ class VideosController extends Controller
             'published_at' => 'required|date',
         ]);
 
-        $video->update([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-            'url' => $request->input('url'),
-            'published_at' => $request->input('published_at'),
-        ]);
+        $video->update($request->all());
 
-        return redirect()->route('videos.index')->with('success', 'Video updated successfully.');
+        session()->flash('message', "S’ha editat el vídeo “{$video->title}”!");
+        session()->flash('type', 'success');
+
+        return redirect()->route('videos.index');
     }
 
     public function edit(Video $video)
     {
         return view('videos.manage.edit', compact('video'));
+    }
+
+    public function destroy(Video $video): RedirectResponse
+    {
+        $videoTitle = $video->title;
+        $video->delete();
+
+        session()->flash('message', "S’ha eliminat el vídeo “{$videoTitle}”!");
+        session()->flash('type', 'success');
+
+        return redirect()->route('videos.index');
     }
 }

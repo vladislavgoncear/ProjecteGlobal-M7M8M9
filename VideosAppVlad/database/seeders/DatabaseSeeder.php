@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Helpers\helpers;
+use App\Helpers\SeriesPermissionsSeeder;
 use App\Helpers\VideoHelper;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -16,6 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UsersTableSeeder::class,
+            SeriesPermissionsSeeder::class
             //SeriesTableSeeder::class,
             //VideosTableSeeder::class,
         ]);

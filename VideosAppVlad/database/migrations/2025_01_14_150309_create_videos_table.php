@@ -24,9 +24,7 @@ class CreateVideosTable extends Migration
             $table->unsignedBigInteger('series_id')->nullable();
             $table->timestamps();
 
-//            $table->foreign('previous')->references('id')->on('videos')->onDelete('set null');
-//            $table->foreign('next')->references('id')->on('videos')->onDelete('set null');
-//            $table->foreign('series_id')->references('id')->on('series')->onDelete('cascade');
+            $table->foreign('series_id')->references('id')->on('series')->onDelete('cascade');
         });
     }
 
