@@ -32,6 +32,7 @@
                 <th>User Photo</th>
                 <th>Created At</th>
                 <th>Updated At</th>
+                <th>Actions</th> <!-- Nueva columna -->
             </tr>
             </thead>
             <tbody>
@@ -58,6 +59,20 @@
                     </td>
                     <td>{{ $serie->created_at->format('d/m/Y H:i:s') }}</td>
                     <td>{{ $serie->updated_at->format('d/m/Y H:i:s') }}</td>
+                    <td>
+                        <!-- Botón de Editar -->
+                        <a href="{{ route('series.manage.edit', $serie->id) }}" class="btn btn-sm btn-warning" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <!-- Botón de Borrar -->
+                        <form action="{{ route('series.manage.destroy', $serie->id) }}" method="POST" style="display: inline-block;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm('Estas segur que vols eliminar aquesta serie?')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
             </tbody>

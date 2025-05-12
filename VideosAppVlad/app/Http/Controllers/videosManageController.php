@@ -62,9 +62,11 @@ class videosManageController extends Controller
     /**
      * Show the form for editing the specified video.
      */
-    public function edit(Video $video)
+    public function edit($id)
     {
-        return view('videos.manage.edit', compact('video'));
+        $video = \App\Models\Video::findOrFail($id);
+        $series = \App\Models\Series::all(); // Obtiene todas las series
+        return view('videos.manage.edit', compact('video', 'series'));
     }
 
     /**

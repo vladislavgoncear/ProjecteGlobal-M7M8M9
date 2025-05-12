@@ -29,6 +29,20 @@ class SeriesController extends Controller
         return view('series.manage.index', compact('series'));
     }
 
+    public function destroy(Series $series)
+    {
+        $series->delete();
+
+        return redirect()->route('series.manage.index')->with('success', 'Series deleted successfully.');
+    }
+
+    public function edit($id)
+    {
+        $series = \App\Models\Series::findOrFail($id); // Fetch the series by ID
+        $allSeries = \App\Models\Series::all(); // Fetch all series for the list
+        return view('series.manage.edit', compact('series', 'allSeries'));
+    }
+
     /**
      * Display the specified series.
      */
@@ -71,6 +85,28 @@ class SeriesController extends Controller
 
         // Redirigir a series.manage.index con un mensaje de éxito
         return redirect()->route('series.manage.index')->with('success', 'Serie creada exitosamente.');
+    }
+
+    public function update(Request $request, Series $series)
+    {
+        // Validate the incoming data
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'published_at' => 'nullable|date',
+        ]);
+
+        // Handle image upload if a new image is provided
+        if ($request->hasFile('image')) {
+            $validatedData['image'] = $request->file('image')->store('series_images', 'public');
+        }
+
+        // Update the series with the validated data
+        $series->update($validatedData);
+
+        // Redirect back with a success message
+        return redirect()->route('series.manage.index')->with('success', 'Serie actualizada exitosamente.');
     }
 
 }

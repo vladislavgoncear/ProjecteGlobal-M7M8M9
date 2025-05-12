@@ -50,9 +50,11 @@ class SeriesManageController extends Controller
     /**
      * Show the form for editing the specified series.
      */
-    public function edit(Series $series)
+    public function edit($id)
     {
-        return view('series.manage.edit', compact('series'));
+        $series = \App\Models\Series::findOrFail($id); // Fetch the series by ID
+        $allSeries = \App\Models\Series::all(); // Fetch all series for the list
+        return view('series.manage.edit', compact('series', 'allSeries'));
     }
 
     /**
