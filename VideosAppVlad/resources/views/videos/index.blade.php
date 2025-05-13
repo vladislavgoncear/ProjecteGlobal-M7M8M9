@@ -17,12 +17,10 @@
             <div class="videos-container">
                 @foreach($videos as $video)
                     <div class="video-card">
-                        <!-- Preview -->
                         <div class="video-preview">
                             <iframe src="{{ $video->url }}" frameborder="0" allowfullscreen></iframe>
                         </div>
 
-                        <!-- Info and Buttons -->
                         <div class="video-info-with-buttons">
                             <div class="video-info">
                                 <h6 class="title text-truncate" title="{{ $video->title }}">{{ $video->title }}</h6>
@@ -53,8 +51,18 @@
 @endsection
 
 <style>
+    html, body {
+        height: 100%;
+        margin: 0;
+
+        overflow-y: hidden;
+    }
+
     .container {
         padding: 2rem;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
     }
 
     .custom-create-btn {
@@ -70,6 +78,8 @@
         font-size: 1rem;
         text-decoration: none;
         transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+        margin-bottom: 1rem;
+        width: fit-content;
     }
 
     .custom-create-btn i {
@@ -82,33 +92,34 @@
     }
 
     .videos-container {
-        display: flex;
-        flex-wrap: nowrap;
+        flex: 1;
+        overflow-y: auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 1rem;
-        overflow-x: auto;
-        padding-bottom: 1rem;
-        margin-top: 1rem;
+        padding-right: 0.5rem;
     }
 
     .video-card {
-        flex: 0 0 300px;
         background: #fff;
         border: 1px solid #ddd;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: column;
-        position: relative;
+        height: fit-content; /* Asegura altura según contenido */
     }
+
 
     .video-preview {
         width: 100%;
         position: relative;
-        padding-bottom: 56.25%;
+        padding-bottom: 56.25%; /* Esto mantiene relación 16:9 del vídeo */
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
         overflow: hidden;
     }
+
 
     .video-preview iframe {
         position: absolute;
@@ -149,26 +160,7 @@
         gap: 0.5rem;
     }
 
-    .video-btn-edit {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        border: none;
-        background-color: #ffc107; /* Yellow for edit */
-        color: #fff;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
-    }
-
-    .video-btn-edit:hover {
-        background-color: #e0a800;
-        transform: scale(1.1);
-    }
-
+    .video-btn-edit,
     .video-btn-delete {
         display: inline-flex;
         align-items: center;
@@ -177,11 +169,23 @@
         height: 36px;
         border-radius: 50%;
         border: none;
-        background-color: #dc3545; /* Red for delete */
-        color: #fff;
         font-size: 1rem;
         cursor: pointer;
         transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+        color: #fff;
+    }
+
+    .video-btn-edit {
+        background-color: #ffc107;
+    }
+
+    .video-btn-edit:hover {
+        background-color: #e0a800;
+        transform: scale(1.1);
+    }
+
+    .video-btn-delete {
+        background-color: #dc3545;
     }
 
     .video-btn-delete:hover {
@@ -190,7 +194,7 @@
     }
 
     .videos-container::-webkit-scrollbar {
-        height: 8px;
+        width: 6px;
     }
 
     .videos-container::-webkit-scrollbar-thumb {
@@ -200,5 +204,12 @@
 
     .videos-container::-webkit-scrollbar-track {
         background: #f1f1f1;
+    }
+
+    /* Responsive: 1 columna en móviles */
+    @media (max-width: 768px) {
+        .videos-container {
+            grid-template-columns: 1fr;
+        }
     }
 </style>

@@ -12,27 +12,25 @@
         </div>
     @else
         <!-- Search Form -->
-        <form action="{{ route('series.index') }}" method="GET" class="mb-4">
-            <div class="input-group">
-                <input type="text" name="search" class="form-control" placeholder="Search series by title" value="{{ request('search') }}">
-                <button type="submit" class="btn btn-primary">Search</button>
-            </div>
+        <form action="{{ route('series.index') }}" method="GET" class="search-form">
+            <input type="text" name="search" class="search-input" placeholder="Buscar series per titol" value="{{ request('search') }}">
+            <button type="submit" class="search-button">Buscar</button>
         </form>
 
         <!-- Series Table -->
-        <table class="table table-bordered">
+        <table class="table table-bordered custom-table">
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Title</th>
-                <th>Description</th>
+                <th>Titol</th>
+                <th>Descripcio</th>
                 <th>Image</th>
-                <th>Published At</th>
-                <th>Created By</th>
-                <th>User Photo</th>
-                <th>Created At</th>
-                <th>Updated At</th>
-                <th>Actions</th> <!-- Nueva columna -->
+                <th>Data publicacio</th>
+                <th>Creador</th>
+                <th>Perfil</th>
+                <th>Data cracio</th>
+                <th>Data actualitzacio</th>
+                <th>Accions</th>
             </tr>
             </thead>
             <tbody>
@@ -60,15 +58,13 @@
                     <td>{{ $serie->created_at->format('d/m/Y H:i:s') }}</td>
                     <td>{{ $serie->updated_at->format('d/m/Y H:i:s') }}</td>
                     <td>
-                        <!-- Botón de Editar -->
-                        <a href="{{ route('series.manage.edit', $serie->id) }}" class="btn btn-sm btn-warning" title="Edit">
+                        <a href="{{ route('series.manage.edit', $serie->id) }}" class="btn action-btn edit-btn" title="Edit">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <!-- Botón de Borrar -->
                         <form action="{{ route('series.manage.destroy', $serie->id) }}" method="POST" style="display: inline-block;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm('Estas segur que vols eliminar aquesta serie?')">
+                            <button type="submit" class="btn action-btn delete-btn" title="Delete" onclick="return confirm('Estas segur que vols eliminar aquesta serie?')">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
@@ -77,6 +73,32 @@
             @endforeach
             </tbody>
         </table>
+
+        <!-- Cards for Mobile -->
+        <div class="cards-container">
+            @foreach($series as $serie)
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $serie->title }}</h5>
+                        <p class="card-text">{{ $serie->description }}</p>
+                        <p class="card-text"><strong>Publicat:</strong> {{ $serie->published_at ? \Carbon\Carbon::parse($serie->published_at)->format('d/m/Y') : 'N/A' }}</p>
+                        <p class="card-text"><strong>Creador:</strong> {{ $serie->user_name }}</p>
+                        <div class="card-actions">
+                            <a href="{{ route('series.manage.edit', $serie->id) }}" class="btn action-btn edit-btn" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <form action="{{ route('series.manage.destroy', $serie->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn action-btn delete-btn" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
 
         <!-- Pagination -->
         <div class="d-flex justify-content-center">
@@ -88,27 +110,145 @@
 @endsection
 
 <style>
-    .create-series-btn {
-        display: inline-flex;
+    /* Search Form */
+    .search-form {
+        display: flex;
         align-items: center;
-        justify-content: center;
-        padding: 10px 20px;
-        border-radius: 25px; /* Bordes redondos */
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .search-input {
+        flex: 1;
+        padding: 0.5rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: 25px;
         font-size: 1rem;
-        font-weight: bold;
-        text-decoration: none;
-        color: #fff;
+        transition: border-color 0.3s ease;
+    }
+
+    .search-input:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    .search-button {
+        padding: 0.5rem 1rem;
         background-color: #007bff;
+        color: #fff;
         border: none;
+        border-radius: 25px;
+        font-size: 1rem;
+        cursor: pointer;
         transition: background-color 0.3s ease, transform 0.2s ease;
     }
 
-    .create-series-btn i {
-        margin-right: 8px; /* Espacio entre el icono y el texto */
+    .search-button:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
     }
 
-    .create-series-btn:hover {
-        background-color: #0056b3;
-        transform: scale(1.05); /* Efecto de zoom al pasar el ratón */
+    /* Table */
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+        background-color: #fff;
+    }
+
+    .custom-table th, .custom-table td {
+        padding: 12px 15px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+
+    .custom-table th {
+        background-color: #f4f4f4;
+        font-weight: bold;
+    }
+
+    .custom-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .custom-table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    /* Cards */
+    .cards-container {
+        display: none;
+        gap: 1rem;
+    }
+
+    .card {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+
+    .card-text {
+        margin-bottom: 0.5rem;
+        color: #555;
+    }
+
+    .card-actions {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    /* Action Buttons */
+    .action-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        font-size: 1rem;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .edit-btn {
+        background-color: #ffc107;
+    }
+
+    .edit-btn:hover {
+        background-color: #e0a800;
+        transform: scale(1.1);
+    }
+
+    .delete-btn {
+        background-color: #dc3545;
+    }
+
+    .delete-btn:hover {
+        background-color: #c82333;
+        transform: scale(1.1);
+    }
+
+    /* Responsive: Show cards on mobile */
+    @media (max-width: 768px) {
+        .custom-table {
+            display: none;
+        }
+
+        .cards-container {
+            display: flex;
+            flex-direction: column;
+        }
     }
 </style>

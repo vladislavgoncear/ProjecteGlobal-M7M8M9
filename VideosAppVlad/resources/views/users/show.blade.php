@@ -19,10 +19,12 @@
                     </div>
                 </div>
             @empty
-                <p>No videos created by this user.</p>
+                <p>No hi ha ningun video creat per aquest usuari.</p>
             @endforelse
         </div>
-        <a href="{{ route('users.index') }}" class="btn btn-primary mt-3">Back to Users</a>
+        <a href="{{ route('users.index') }}" class="btn custom-users-btn mt-3">
+            <i class="fas fa-users"></i> Llista d'usuaris
+        </a>
     </div>
 @endsection
 
@@ -75,5 +77,28 @@
     .col-6, .col-md-4, .col-lg-2 {
         flex: 0 0 auto;
         width: 15%;
+    }
+
+    .custom-users-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #007bff;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        font-weight: 500;
+        font-size: 1rem;
+        text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .custom-users-btn i {
+        margin-right: 8px;
+    }
+
+    .custom-users-btn:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
     }
 </style>

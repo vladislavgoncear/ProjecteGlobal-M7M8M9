@@ -3,13 +3,18 @@
 @section('content')
     <h1 class="text-center mb-4">Llista de usuaris</h1>
 
+    <!-- Search Form -->
     <form method="GET" action="{{ route('users.manage.index') }}" class="search-form">
         <input type="text" name="search" placeholder="Buscar usuari..." value="{{ request('search') }}" class="search-input">
-        <button type="submit" class="btn btn-primary search-button">Buscar</button>
+        <button type="submit" class="search-button">Buscar</button>
     </form>
 
-    <a href="{{ route('users.manage.create') }}" class="btn custom-create-btn mb-4">➕ Crear usuario</a>
+    <!-- Create User Button -->
+    <a href="{{ route('users.manage.create') }}" class="btn custom-create-btn mb-4">
+        <i class="fas fa-user-plus"></i> Crear usuario
+    </a>
 
+    <!-- User Cards -->
     <div class="user-cards-container">
         @foreach($users as $user)
             <div class="user-card">
@@ -19,20 +24,17 @@
                 <h5 class="user-name">{{ $user->name }}</h5>
                 <p class="user-email">{{ $user->email }}</p>
 
-                <div class="dropdown">
-                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ route('users.manage.edit', ['user' => $user->id]) }}">Edit</a></li>
-                        <li>
-                            <form action="{{ route('users.manage.destroy', ['user' => $user->id]) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="dropdown-item text-danger">Delete</button>
-                            </form>
-                        </li>
-                    </ul>
+                <div class="card-actions">
+                    <a href="{{ route('users.manage.edit', ['user' => $user->id]) }}" class="btn action-btn edit-btn" title="Edit">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <form action="{{ route('users.manage.destroy', ['user' => $user->id]) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn action-btn delete-btn" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
         @endforeach
@@ -40,46 +42,70 @@
 @endsection
 
 <style>
+    /* Search Form */
     .search-form {
         text-align: center;
         margin-bottom: 1.5rem;
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
     }
 
     .search-input {
         width: 300px;
-        padding: 8px;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        margin-right: 10px;
+        padding: 0.5rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: 25px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+
+    .search-input:focus {
+        border-color: #007bff;
+        outline: none;
     }
 
     .search-button {
-        padding: 8px 15px;
-        border-radius: 8px;
+        padding: 0.5rem 1rem;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 25px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
     }
 
+    .search-button:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+    }
+
+    /* Create User Button */
     .custom-create-btn {
-        background-color: #f0f0f0;
-        border: 1px solid #ccc;
-        color: #333;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #007bff;
+        color: #fff;
         padding: 0.5rem 1rem;
-        border-radius: 8px;
+        border-radius: 25px;
         font-weight: 500;
-        transition: background-color 0.2s ease-in-out;
+        font-size: 1rem;
         text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .custom-create-btn i {
+        margin-right: 8px;
     }
 
     .custom-create-btn:hover {
-        background-color: #e0e0e0;
-        color: #000;
+        background-color: #0056b3;
+        transform: scale(1.05);
     }
 
-    .create-button {
-        display: inline-block;
-        margin-bottom: 1.5rem;
-        border-radius: 8px;
-    }
-
+    /* User Cards */
     .user-cards-container {
         display: flex;
         flex-wrap: wrap;
@@ -93,7 +119,7 @@
         background: #fff;
         border: 1px solid #ddd;
         border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         padding: 20px;
         text-align: center;
     }
@@ -121,11 +147,43 @@
         color: #555;
     }
 
-    .dropdown {
+    /* Action Buttons */
+    .card-actions {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
         margin-top: 10px;
     }
 
-    .dropdown-menu {
-        border-radius: 8px;
+    .action-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        font-size: 1rem;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .edit-btn {
+        background-color: #ffc107;
+    }
+
+    .edit-btn:hover {
+        background-color: #e0a800;
+        transform: scale(1.1);
+    }
+
+    .delete-btn {
+        background-color: #dc3545;
+    }
+
+    .delete-btn:hover {
+        background-color: #c82333;
+        transform: scale(1.1);
     }
 </style>
