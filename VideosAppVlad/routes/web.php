@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\SeriesManageController;
 use App\Http\Controllers\usersController;
@@ -82,3 +83,5 @@ Route::middleware([
 Route::get('/series/{series}/add-videos', [SeriesManageController::class, 'addVideos'])->name('series.manage.add-videos');
 Route::post('/series/{series}/add-videos', [SeriesManageController::class, 'storeVideos'])->name('series.store-videos');
 //});
+
+Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');

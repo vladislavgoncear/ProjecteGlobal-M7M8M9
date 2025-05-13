@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\VideoCreated;
 use App\Models\Video;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -58,7 +59,11 @@ class VideosController extends Controller
             'user_id' => auth()->id(),
         ]);
 
-        session()->flash('message', "S’ha creat el vídeo “{$video->title}”!");
+        // Disparar l'event VideoCreated
+//        event(new VideoCreated($video));
+
+
+    session()->flash('message', "S’ha creat el vídeo “{$video->title}”!");
         session()->flash('type', 'success');
 
         return redirect()->route('videos.index');

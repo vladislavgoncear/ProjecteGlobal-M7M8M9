@@ -107,3 +107,23 @@ Durant el sisè sprint, es van completar les següents tasques:
     - `superadmins_can_manage_series`
 - Afegits tests d'unitat per verificar la relació entre sèries i vídeos.
 - Millora de la documentació del projecte per incloure els canvis realitzats en la gestió de sèries.
+
+## Resum del Sprint 7
+
+Durant el setè sprint, s'han completat les següents tasques:
+
+1. **Notificacions Push**
+    - Configuració de Laravel Echo per escoltar notificacions push en temps real.
+    - Creació de la vista `resources/views/notifications/index.blade.php` per mostrar les notificacions.
+    - Implementació del controlador `NotificationController` per gestionar la vista de notificacions.
+    - Afegida la ruta `/notifications` al fitxer `routes/web.php`.
+
+2. **Tests de Notificacions**
+    - Afegits tests per verificar el comportament de les notificacions:
+        - `test_video_created_event_is_dispatched`: Comprova que l'esdeveniment `VideoCreated` es dispara quan es crea un vídeo.
+        - `test_push_notification_is_sent_when_video_is_created`: Comprova que s'envia una notificació push quan es crea un vídeo.
+
+3. **Millores Generals**
+    - Compilació dels assets amb Laravel Mix per assegurar el correcte funcionament de les notificacions en temps real.
+    - Revisió i actualització de la documentació per incloure les noves funcionalitats implementades.
+
