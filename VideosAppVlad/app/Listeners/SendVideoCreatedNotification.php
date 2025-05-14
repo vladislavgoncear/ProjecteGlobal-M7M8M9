@@ -21,7 +21,7 @@ class SendVideoCreatedNotification
         $video = $event->video;
 
         // Retrieve all admin users
-        $admins = User::where('role', 'admin')->get();
+//        $admins = User::where('role', 'admin')->get();
 
         // Send email to each admin
         Mail::to("jordivega@iesebre.com")->send(new VideoCreated($video));
@@ -30,11 +30,11 @@ class SendVideoCreatedNotification
 //        }
 
         // Send notification to admins
-        foreach ($admins as $admin) {
-            $admin->notify(new VideoCreatedNotification($video));
+//        foreach ($admins as $admin) {
+//            $admin->notify(new VideoCreatedNotification($video));
         }
 
         // Broadcast the event via Pusher
-        broadcast(new VideoCreated($video));
-    }
+//        broadcast(new VideoCreated($video));
+    //}
 }
